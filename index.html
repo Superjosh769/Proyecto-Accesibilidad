@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proyecto Accesibilidad</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<!-- FONDO -->
+<canvas id="bg"></canvas>
+
+<header>
+    <img src="equipoLogo.jpeg" class="logo">
+    <h1>Sistema Inteligente de Navegación</h1>
+    <p>Tecnología que guía, seguridad que transforma</p>
+</header>
+
+<section>
+    <div class="card">
+        <h2>Problema</h2>
+        <p>Las personas con discapacidad visual enfrentan obstáculos difíciles de detectar.</p>
+    </div>
+
+    <div class="card">
+        <h2>Solución</h2>
+        <p>Sistema de sensores que detectan obstáculos y alertan mediante vibraciones.</p>
+    </div>
+
+    <div class="card">
+        <h2>Arquitectura del Sistema</h2>
+        <p>Sensores ultrasónicos + microcontrolador + vibración inteligente.</p>
+    </div>
+</section>
+
+<!-- MATERIALES -->
+<section class="materials-section">
+    <h2>Materiales</h2>
+
+    <canvas id="circuit"></canvas>
+
+    <div class="materials">
+
+        <div class="item">
+            <svg class="icon" viewBox="0 0 24 24">
+                <rect x="5" y="7" width="14" height="10" rx="2" stroke="white" fill="none" stroke-width="2"/>
+                <circle cx="8" cy="12" r="1" fill="white"/>
+                <circle cx="16" cy="12" r="1" fill="white"/>
+            </svg>
+            <p>Arduino Nano</p>
+        </div>
+
+        <div class="item">
+            <svg class="icon" viewBox="0 0 24 24">
+                <line x1="4" y1="6" x2="20" y2="6" stroke="white" stroke-width="2"/>
+                <line x1="4" y1="12" x2="20" y2="12" stroke="white" stroke-width="2"/>
+                <line x1="4" y1="18" x2="20" y2="18" stroke="white" stroke-width="2"/>
+            </svg>
+            <p>Jumpers</p>
+        </div>
+
+        <div class="item">
+            <svg class="icon" viewBox="0 0 24 24">
+                <circle cx="8" cy="12" r="3" stroke="white" fill="none" stroke-width="2"/>
+                <circle cx="16" cy="12" r="3" stroke="white" fill="none" stroke-width="2"/>
+            </svg>
+            <p>Sensores ultrasónicos</p>
+        </div>
+
+        <div class="item">
+            <svg class="icon" viewBox="0 0 24 24">
+                <rect x="8" y="8" width="8" height="8" stroke="white" fill="none" stroke-width="2"/>
+                <path d="M4 10 L6 12 L4 14" stroke="white" fill="none" stroke-width="2"/>
+                <path d="M20 10 L18 12 L20 14" stroke="white" fill="none" stroke-width="2"/>
+            </svg>
+            <p>Motores de vibración</p>
+        </div>
+
+        <div class="item">
+            <svg class="icon" viewBox="0 0 24 24">
+                <line x1="4" y1="12" x2="10" y2="12" stroke="white" stroke-width="2"/>
+                <polygon points="10,8 16,12 10,16" fill="white"/>
+                <line x1="16" y1="8" x2="16" y2="16" stroke="white" stroke-width="2"/>
+                <line x1="16" y1="12" x2="20" y2="12" stroke="white" stroke-width="2"/>
+            </svg>
+            <p>Diodo</p>
+        </div>
+
+        <div class="item">
+            <svg class="icon" viewBox="0 0 24 24">
+                <circle cx="12" cy="10" r="3" stroke="white" fill="none" stroke-width="2"/>
+                <line x1="12" y1="13" x2="12" y2="20" stroke="white" stroke-width="2"/>
+                <line x1="9" y1="12" x2="5" y2="16" stroke="white" stroke-width="2"/>
+                <line x1="15" y1="12" x2="19" y2="16" stroke="white" stroke-width="2"/>
+            </svg>
+            <p>Transistores 2N2222A</p>
+        </div>
+
+    </div>
+</section>
+
+<!-- SENSORES -->
+<section class="sensors-section">
+    <h2>Simulación de Sensores</h2>
+
+    <div class="sensor-box">
+        <input type="range" min="0" max="100" value="100" id="distancia">
+
+        <div class="sensor-container">
+            <div class="sensor" id="s1">Superior</div>
+            <div class="sensor" id="s2">Medio</div>
+            <div class="sensor" id="s3">Inferior</div>
+        </div>
+    </div>
+</section>
+
+<!-- EQUIPO -->
+<section>
+    <h2>Equipo de Desarrollo</h2>
+    <div class="team">
+        <div class="member">Joshua Benjumé Beltrán</div>
+        <div class="member">Edgar Alejandro Reyes Vargas</div>
+        <div class="member">Valentina Navarrete Méndez</div>
+        <div class="member">Laura María Peña Pintau</div>
+        <div class="member">Najla Joseline Escoto Espino</div>
+        <div class="member">Paulina Alexia Bolaños Durán</div>
+    </div>
+</section>
+
+<script>
+// FONDO PARTÍCULAS
+const canvas = document.getElementById("bg");
+const ctx = canvas.getContext("2d");
+
+function resize(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener("resize", resize);
+
+let particles = [];
+for(let i=0;i<60;i++){
+    particles.push({
+        x: Math.random()*canvas.width,
+        y: Math.random()*canvas.height,
+        vx: (Math.random()-0.5),
+        vy: (Math.random()-0.5)
+    });
+}
+
+function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    particles.forEach(p=>{
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,2,0,Math.PI*2);
+        ctx.fillStyle="#00eaff";
+        ctx.fill();
+
+        particles.forEach(p2=>{
+            let d = Math.hypot(p.x-p2.x,p.y-p2.y);
+            if(d<100){
+                ctx.beginPath();
+                ctx.moveTo(p.x,p.y);
+                ctx.lineTo(p2.x,p2.y);
+                ctx.strokeStyle="rgba(0,234,255,"+(1-d/100)+")";
+                ctx.stroke();
+            }
+        });
+
+        p.x+=p.vx;
+        p.y+=p.vy;
+    });
+
+    requestAnimationFrame(draw);
+}
+draw();
+
+// SENSORES
+const slider = document.getElementById("distancia");
+const sensores = [s1,s2,s3];
+
+slider.addEventListener("input", ()=>{
+    let d = slider.value;
+
+    sensores.forEach(s=>{
+        let intensidad = (100 - d)/100;
+        s.style.boxShadow = `0 0 ${intensidad*40}px cyan`;
+        s.style.transform = `scale(${1+intensidad*0.3})`;
+        s.style.animation = intensidad>0.3 ? "vibrate 0.1s infinite" : "none";
+    });
+});
+
+// CIRCUITO CON PULSOS
+const circuit = document.getElementById("circuit");
+const ctx2 = circuit.getContext("2d");
+
+function resizeCircuit(){
+    circuit.width = circuit.offsetWidth;
+    circuit.height = circuit.offsetHeight;
+}
+resizeCircuit();
+window.addEventListener("resize", resizeCircuit);
+
+let t = 0;
+
+function drawCircuit(){
+    ctx2.clearRect(0,0,circuit.width,circuit.height);
+
+    const items = document.querySelectorAll(".item");
+    let points = [];
+
+    items.forEach(el=>{
+        const r = el.getBoundingClientRect();
+        const pr = circuit.getBoundingClientRect();
+        points.push({
+            x: r.left - pr.left + r.width/2,
+            y: r.top - pr.top + r.height/2
+        });
+    });
+
+    for(let i=0;i<points.length;i++){
+        for(let j=i+1;j<points.length;j++){
+            let p1 = points[i];
+            let p2 = points[j];
+            let dist = Math.hypot(p1.x-p2.x,p1.y-p2.y);
+
+            if(dist < 300){
+                // línea base
+                ctx2.beginPath();
+                ctx2.moveTo(p1.x,p1.y);
+                ctx2.lineTo(p2.x,p2.y);
+                ctx2.strokeStyle = "rgba(0,255,255,0.2)";
+                ctx2.stroke();
+
+                // pulso
+                let pulse = (Math.sin(t + i + j)+1)/2;
+                let px = p1.x + (p2.x - p1.x)*pulse;
+                let py = p1.y + (p2.y - p1.y)*pulse;
+
+                ctx2.beginPath();
+                ctx2.arc(px,py,3,0,Math.PI*2);
+                ctx2.fillStyle = "cyan";
+                ctx2.fill();
+            }
+        }
+    }
+
+    t += 0.05;
+    requestAnimationFrame(drawCircuit);
+}
+
+drawCircuit();
+</script>
+
+<!-- CARRUSEL -->
+<section class="carousel-section">
+    <h2>Nuestro Equipo en Acción</h2>
+
+    <div class="carousel">
+        <div class="track">
+            <img src="Decoración.jpeg">
+            <img src="Circuito 1.jpeg">
+            <img src="equipo3.jpg">
+            <img src="equipo4.jpg">
+            <img src="Documento.JPG">
+
+            <!-- duplicadas para loop infinito -->
+            <img src="Decoración.jpeg">
+            <img src="Circuito 1.jpeg">
+            <img src="equipo3.jpg">
+            <img src="equipo4.jpg">
+            <img src="Documento.JPG">
+        </div>
+    </div>
+</section>
+</body>
+</html>
